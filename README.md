@@ -12,13 +12,13 @@ A basic C++ emulator for the Nintendo GameBoy.
   * Apple Clang >= 11.0.0
 ### Building
 ##### General Build for Debug
-```
+```bash
 cd <PROJECT_ROOT>/build
 cmake .. -DCMAKE_BUILD_TYPE=Debug
 make
 ```
 ##### Build with an Install Prefix
-```
+```bash
 cd <PROJECT_ROOT>/build
 cmake .. -DCMAKE_INSTALL_PREFIX=~/.local
 make
