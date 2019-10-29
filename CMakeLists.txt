@@ -46,7 +46,9 @@ target_include_directories(egb
 
 target_link_libraries(egb
   PRIVATE
-  stdc++fs
+    $<$<PLATFORM_ID:Linux>:stdc++fs>
+    $<$<PLATFORM_ID:Darwin>:${CXX_FILESYSTEM_LIBRARY}>
+    $<$<PLATFORM_ID:Windows>:> 
   PUBLIC
 )
 
