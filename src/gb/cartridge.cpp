@@ -2,10 +2,11 @@
 #include <egb/defines.hpp>
 
 #include <cstdint>
-#include <string>
 #include <filesystem>
 #include <fstream>
 #include <exception>
+#include <string>
+#include <sstream>
 
 namespace egb::gb {
   Cartridge::Cartridge(std::string filename) {
