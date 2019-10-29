@@ -1,5 +1,9 @@
 # EGB
 A basic C++ emulator for the Nintendo GameBoy.
+This project currently does not get out of the BIOS yet. For a game like Tetris, minimal isntruction sets are needed.
+Currently building towards ROM ONLY support, then will expand to others.
+
+Might eventually add grahics, sound, input, etc.
 
 ## Compiling
 ### Requirements
@@ -33,8 +37,10 @@ make install
 - [ ] Clean up code
 - [ ] Revisit poor design choices
 - [ ] Write up documentation
-- [ ] Createa a write up this time
+- [ ] Create a a write up this time
 
 #### Notes
 * DO NOT DELETE THIS TIME
 * Only tested on Linux.
+* Should compile on Apple
+  * Issues should really only be around C++17 and `<filesystem>`
