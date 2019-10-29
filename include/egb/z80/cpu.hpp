@@ -38,6 +38,7 @@ namespace egb::z80 {
     auto _JRNZe() -> void;
     auto _LDnnA() -> void;
     auto _LDSPHL() -> void;
+    auto _SBCAr(std::uint8_t byte) -> void;
 
   public:
     CPU(MMU * mmu);

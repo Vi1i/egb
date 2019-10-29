@@ -47,7 +47,7 @@ namespace egb::z80 {
         this->_LDnnSP();
         break;
 
-        // INCss where ss is a register pair
+      // INCss where ss is a register pair
       //case 0x03:
       case 0x13:
       case 0x23:
@@ -83,9 +83,9 @@ namespace egb::z80 {
       //case 0x1E:
       //case 0x26:
       //case 0x2E:
-      //case 0x3E:
-      //  this->_LDrn(byte);
-      //  break;
+      case 0x3E:
+        this->_LDrn(byte);
+        break;
 
       //case 0x1A:
       //  this->_LDADE();
@@ -101,6 +101,10 @@ namespace egb::z80 {
 
       case 0x31:
         this->_LDSPnn();
+        break;
+
+      case 0x99:
+        this->_SBCAr(byte);
         break;
 
       case 0xF9:
@@ -119,9 +123,9 @@ namespace egb::z80 {
         this->_RSTp(byte);
         break;
 
-      //case 0xEA:
-      //  this->_LDnnA();
-      //  break;
+      case 0xEA:
+        this->_LDnnA();
+        break;
 
       //case 0xFE:
       //  this->_CPn();
@@ -462,6 +466,45 @@ namespace egb::z80 {
    **/
   auto CPU::_LDSPHL() -> void {
     this->_rSP.SetWord(this->_rHL.GetWord());
+    this->_cycles += 1;
+  }
+
+  /**
+   * Refer to page 150 Z80 CPU User's Manual
+   **/
+  auto CPU::_SBCAr(std::uint8_t byte) -> void {
+    int a = this->_rAF.GetHiByte();
+    int f = this->_rAF.GetLoByte();
+    int r;
+
+    switch(byte) {
+      case 0x99:
+        r = this->_rBC.GetLoByte();
+        break;
+      default:
+        throw std::runtime_error("SBC A,r not fully implemented yet!");
+    }
+    int res = a - ((f & 0x10) + r);
+    if(res < 0) {
+      f = 0x50;
+    } else {
+      f = 0x40;
+    }
+
+    std::uint8_t n_res = res & 0xFF;
+
+    if(!n_res) {
+      f = f | 0x80;
+    }
+
+    if((n_res ^ r ^ a) & 0x10) {
+      f = f | 0x20;
+    }
+    std::uint8_t nf = f;
+
+    this->_rAF.SetLoByte(nf);
+    this->_rAF.SetHiByte(n_res);
+
     this->_cycles += 1;
   }
 }
