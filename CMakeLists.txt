@@ -18,12 +18,13 @@ endif ()
 ##############################################
 # Create target and set properties
 add_executable(egb
-  src/main.cpp
+  # CLI stuff
+  #src/cli.cpp
 
   # Z80 stuff
   src/z80/memory.cpp
   src/z80/mmu.cpp
-  src/z80/register.cpp
+  #src/z80/register.cpp
 
   # I am unsure if this should stay in the z80 namespace
   # as the direct modification from the GB diffs make
@@ -33,6 +34,9 @@ add_executable(egb
   # GameBoy stuffs
   src/gb/cartridge.cpp
   src/gb/system.cpp
+
+  # main
+  src/main.cpp
 )
 
 #Set target properties
@@ -40,15 +44,16 @@ target_include_directories(egb
     PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:lib>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_link_libraries(egb
   PRIVATE
-    $<$<PLATFORM_ID:Linux>:stdc++fs>
-    $<$<PLATFORM_ID:Darwin>:${CXX_FILESYSTEM_LIBRARY}>
-    $<$<PLATFORM_ID:Windows>:> 
+    $<$<PLATFORM_ID:Linux>:std++fs>
+    ncurses
   PUBLIC
 )
 
@@ -56,11 +61,15 @@ target_link_libraries(egb
 # Installation instructions
 # + Linux support
 
-include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/egb)
-
-install(TARGETS egb
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+if(<PLATFORM_ID:Windows>)
+elseif($<PLATFORM_ID:Linux>)
+  include(GNUInstallDirs)
+  set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/egb)
+  
+  install(TARGETS egb
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+  
+  install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+elseif($<PLATFORM_ID:Darwin>)
+endif()
