@@ -14,20 +14,20 @@ namespace egb::gb {
       throw std::runtime_error("File does not exist, " + filename + " not found.");
     }
 
-    this->_file_size = std::filesystem::file_size(filename);
+    _file_size = std::filesystem::file_size(filename);
     std::ifstream file(filename, std::ios::binary);
 
 
-    this->_buffer = new std::uint8_t[this->_file_size + 1];
-    for(auto z = 0; z <= this->_file_size; ++z) {
-      this->_buffer[z] = 0;
+    _buffer = new std::uint8_t[_file_size + 1];
+    for(auto z = 0; z <= _file_size; ++z) {
+      _buffer[z] = 0;
     }
 
     char c;
     int pos = 0;
     while(file.get(c)) {
       std::uint8_t byte = static_cast<std::uint8_t>(c);
-      this->_buffer[pos] = byte;
+      _buffer[pos] = byte;
       pos++;
     }
 
@@ -37,7 +37,7 @@ namespace egb::gb {
   }
 
   Cartridge::~Cartridge() {
-    delete [] this->_buffer;
+    delete [] _buffer;
   }
 
   // TODO: (Vi1i) Currently using a lot of hardcoded positions, which should
@@ -48,33 +48,33 @@ namespace egb::gb {
     // Get the title
     std::ostringstream oss;
     for (int i = 0x0134; i <= 0x143; ++i) {
-      oss << this->_buffer[i];
+      oss << _buffer[i];
     }
-    this->_title = oss.str();
+    _title = oss.str();
 
     //Get the cartridge type
-    this->_type = this->_buffer[0x0147];
+    _type = _buffer[0x0147];
 
     //Get the ROM size
-    this->_romSize = static_cast<int>(this->_buffer[0x0148]);
+    _romSize = static_cast<int>(_buffer[0x0148]);
 
     //Get the RAM size
-    this->_ramSize = static_cast<int>(this->_buffer[0x0149]);
+    _ramSize = static_cast<int>(_buffer[0x0149]);
   }
 
   auto Cartridge::GetTitle() -> std::string {
-    return this->_title;
+    return _title;
   }
 
   auto Cartridge::GetType() -> std::uint8_t {
-    return this->_type;
+    return _type;
   }
 
   auto Cartridge::GetROMSize() -> std::size_t {
-    return this->_romSize;
+    return _romSize;
   }
 
   auto Cartridge::GetRAMSize() -> std::size_t {
-    return this->_ramSize;
+    return _ramSize;
   }
 }

@@ -19,7 +19,7 @@ namespace egb::z80 {
     Memory();
     ~Memory();
 
-    auto WB(const std::uint16_t addr, const std::uint8_t bytes) -> void;
-    auto RB(const std::uint16_t addr) -> std::uint8_t;
+    auto WB(const std::uint16_t addr, const std::uint8_t bytes) noexcept(false) -> void;
+    auto RB(const std::uint16_t addr) noexcept(false) -> std::uint8_t;
   };
 }

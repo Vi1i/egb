@@ -5,7 +5,9 @@
 
 namespace egb::z80 {
   /**
-   * TODO: (Vi1i) Set endianness
+   * TODO: (Vi1i) The xW functions handle endianness, for the z80 it is little endian.
+   *              This means that words need to be flipped during reads and writes.
+   *              Memory(LH) <-> Register(HL)
    **/
   class MMU {
     egb::z80::Memory _memory;
