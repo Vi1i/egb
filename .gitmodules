@@ -1,3 +1,0 @@
-[submodule "lib/colorize"]
-	path = lib/colorize
-	url = git@github.com:fengwang/colorize.git
