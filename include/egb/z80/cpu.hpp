@@ -4,6 +4,7 @@
 #include <egb/z80/register.hpp>
 
 #include <cstdint>
+#include <unordered_map>
 
 #define RegAF 0
 #define RegBC 1
@@ -18,6 +19,21 @@ namespace egb::z80 {
     std::uint64_t _steps;
     MMU * _mmu;
 
+    typedef void(z80::CPU:: * ins)();
+    std::unordered_map<std::uint8_t, ins> _instructions;
+
+    auto ClearFlags() -> void;
+    auto SetZFlag(bool onoff) -> void;
+    auto SetNFlag(bool onoff) -> void;
+    auto SetHFlag(bool onoff) -> void;
+    auto SetCFlag(bool onoff) -> void;
+
+    auto LD_n_nn() -> void;
+    auto SBC_A_s() -> void;
+    auto _SBC_A_r() -> void;
+    auto _SBC_A_n() -> void;
+    auto _SBC_A_hl() -> void;
+
   public:
     Register regs[6];
     Register prev_regs[6];
@@ -28,6 +44,6 @@ namespace egb::z80 {
 
     auto Step() -> void;
     auto GetSteps() -> std::uint64_t;
-    auto GetCycles() -> std::uint64_t;
+    auto GetCycles() noexcept(false) -> std::uint64_t;
   };
 }

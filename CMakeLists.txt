@@ -18,6 +18,9 @@ endif ()
 ##############################################
 # Create target and set properties
 add_executable(egb
+  # UTIL stuff
+  src/utils/utils.cpp
+
   # CLI stuff
   #src/cli.cpp
 
@@ -30,6 +33,8 @@ add_executable(egb
   # as the direct modification from the GB diffs make
   # this more of a GB perhaps?
   src/z80/cpu.cpp
+  src/z80/instructions/ld_n_nn.cpp
+  src/z80/instructions/sbc_A_r.cpp
 
   # GameBoy stuffs
   src/gb/cartridge.cpp
