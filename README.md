@@ -5,6 +5,9 @@ Currently building towards ROM ONLY support, then will expand to others.
 
 Might eventually add grahics, sound, input, etc.
 
+![EGB CLI 0](/docs/images/egb-cli_0.png)
+![EGB CLI 1](/docs/images/egb-cli_1.png)
+
 ## Compiling
 ### Requirements
 * CMAKE 3 >= 3.5
