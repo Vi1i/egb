@@ -14,6 +14,8 @@ Might eventually add grahics, sound, input, etc.
   * Clang >= 7
   * MSVC >= 19.14
   * Apple Clang >= 11.0.0
+* ncurses
+  * This will curently limit windows, PDcurses will allow though. This will require something like an observer or MVC set up that is currently not there though.
 ### Building
 ##### General Build for Debug
 ```bash
