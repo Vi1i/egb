@@ -5,8 +5,6 @@
 #include <egb/defines.hpp>
 #include <egb/utils/utils.hpp>
 
-#include <colorize/color.hpp>
-
 #include <stdexcept>
 #include <iostream>
 #include <string>
