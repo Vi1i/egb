@@ -15,6 +15,7 @@ namespace egb::gb {
     WINDOW * _regWin;
     WINDOW * _carWin;
     WINDOW * _insWin;
+    WINDOW * _memWin;
     int _h,_w;
 
   public:
@@ -27,5 +28,6 @@ namespace egb::gb {
     auto UpdateCarWindow() -> void;
     auto UpdateRegWindow() -> void;
     auto UpdateInsWindow() -> void;
+    auto UpdateMemWindow() -> void;
   };
 }
