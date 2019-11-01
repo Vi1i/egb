@@ -40,6 +40,8 @@ namespace egb::gb {
   System::~System() {
     delwin(_carWin);
     delwin(_regWin);
+    delwin(_insWin);
+    delwin(_memWin);
     endwin();
   }
 
@@ -80,6 +82,7 @@ namespace egb::gb {
     }
     wrefresh(_memWin);
   }
+
   auto System::UpdateCarWindow() -> void {
     std::string title = _cartridge->GetTitle();
     std::string ramSize = utils::pByte(_cartridge->GetRAMSize());
@@ -100,6 +103,7 @@ namespace egb::gb {
     mvwprintw(_insWin,1,1, "OPCode: %s", utils::pByte(_mmu.RB(_cpu.regs[RegPC].w)).c_str());
     wrefresh(_insWin);
   }
+
   auto System::UpdateRegWindow() -> void {
     mvwprintw(_regWin,0,0, "(s)-To-Step");
     mvwprintw(_regWin,0,15, "Registry Information");
