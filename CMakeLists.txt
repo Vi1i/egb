@@ -27,7 +27,6 @@ add_executable(egb
   # Z80 stuff
   src/z80/memory.cpp
   src/z80/mmu.cpp
-  #src/z80/register.cpp
 
   # I am unsure if this should stay in the z80 namespace
   # as the direct modification from the GB diffs make
@@ -35,6 +34,8 @@ add_executable(egb
   src/z80/cpu.cpp
   src/z80/instructions/ld_n_nn.cpp
   src/z80/instructions/sbc_A_r.cpp
+  src/z80/instructions/cb-ops.cpp
+  src/z80/instructions/sla_n.cpp
 
   # GameBoy stuffs
   src/gb/cartridge.cpp
@@ -55,7 +56,6 @@ target_include_directories(egb
 
 target_link_libraries(egb
   PRIVATE
-    $<$<PLATFORM_ID:Linux>:std++fs>
     ncurses
   PUBLIC
 )

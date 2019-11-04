@@ -33,6 +33,10 @@ namespace egb::z80 {
     auto _SBC_A_r() -> void;
     auto _SBC_A_n() -> void;
     auto _SBC_A_hl() -> void;
+    auto CBSwitcher() -> void;
+    auto SLA_n() -> void;
+    auto _SLA_r(int target, bool hiByte) -> void;
+    auto _SLA_hl() -> void;
 
   public:
     Register regs[6];

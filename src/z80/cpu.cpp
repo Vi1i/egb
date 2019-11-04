@@ -22,6 +22,15 @@ namespace egb::z80 {
     _instructions[0x21] = &CPU::LD_n_nn;
     _instructions[0x31] = &CPU::LD_n_nn;
 
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+    _instructions[0xCB] = &CPU::CBSwitcher;
+
     _instructions[0x98] = &CPU::SBC_A_s;
     _instructions[0x99] = &CPU::SBC_A_s;
     _instructions[0x9A] = &CPU::SBC_A_s;
