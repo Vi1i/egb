@@ -1,8 +1,8 @@
 #pragma once
 
+#include <egb/gb/cartridge.hpp>
 #include <egb/z80/mmu.hpp>
 #include <egb/z80/cpu.hpp>
-#include <egb/gb/cartridge.hpp>
 
 #include <curses.h>
 
@@ -15,7 +15,8 @@ namespace egb::gb {
     WINDOW * _regWin;
     WINDOW * _carWin;
     WINDOW * _insWin;
-    WINDOW * _memWin;
+    WINDOW * _spWin;
+    WINDOW * _pcWin;
     int _h,_w;
 
   public:
@@ -28,6 +29,7 @@ namespace egb::gb {
     auto UpdateCarWindow() -> void;
     auto UpdateRegWindow() -> void;
     auto UpdateInsWindow() -> void;
-    auto UpdateMemWindow() -> void;
+    auto UpdateSPWindow() -> void;
+    auto UpdatePCWindow() -> void;
   };
 }

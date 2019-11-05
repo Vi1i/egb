@@ -10,7 +10,7 @@
  **/
 namespace egb::z80 {
   Memory::Memory() {
-    _memory = new std::uint8_t[egb::defines::MEMORY_END + 1];
+    _memory = new BYTE[egb::defines::MEMORY_END + 1];
     for(auto z = 0; z <= egb::defines::MEMORY_END ; ++z) {
       if(z <= egb::defines::BIOS_END) {
         _memory[z] = egb::defines::BIOS_DATA[z];
@@ -24,7 +24,7 @@ namespace egb::z80 {
     delete [] _memory;
   }
 
-  auto Memory::WB(const std::uint16_t addr, const std::uint8_t byte) -> void {
+  auto Memory::WB(const WORD addr, const BYTE byte) -> void {
     if(addr > egb::defines::MEMORY_END) {
       throw std::runtime_error("Invalid address " + std::to_string(addr) + " given.");
     }
@@ -32,7 +32,7 @@ namespace egb::z80 {
     _memory[addr] = byte;
   }
 
-  auto Memory::RB(const std::uint16_t addr)  -> std::uint8_t {
+  auto Memory::RB(const WORD addr)  -> BYTE {
     if(addr > egb::defines::MEMORY_END) {
       throw std::runtime_error("Invalid address " + std::to_string(addr) + " given.");
     }

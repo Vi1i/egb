@@ -1,14 +1,14 @@
 #pragma once
 
-#include <cstdint>
+#include <egb/defines.hpp>
 
 namespace egb::z80 {
   union Register {
-    std::uint16_t w;
+    WORD w;
 
     struct {
-      std::uint8_t h;
-      std::uint8_t l;
+      BYTE h;
+      BYTE l;
     };
   };
 }

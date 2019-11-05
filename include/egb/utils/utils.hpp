@@ -1,11 +1,11 @@
 #pragma once
 
-#include <cstdint>
+#include <egb/defines.hpp>
 #include <string>
 
 namespace egb::utils {
-    auto pWord(std::uint16_t word) -> std::string;
-    auto Word(std::uint16_t word) -> std::string;
-    auto pByte(std::uint8_t byte) -> std::string;
-    auto Byte(std::uint8_t byte) -> std::string;
+    auto pWord(WORD word) -> std::string;
+    auto Word(WORD word) -> std::string;
+    auto pByte(BYTE byte) -> std::string;
+    auto Byte(BYTE byte) -> std::string;
 }
