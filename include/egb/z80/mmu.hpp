@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint>
+#include <egb/defines.hpp>
 #include <egb/z80/memory.hpp>
 
 namespace egb::z80 {
@@ -17,9 +17,9 @@ namespace egb::z80 {
     MMU();
     ~MMU();
 
-    auto WB(const std::uint16_t addr, const std::uint8_t byte) -> void;
-    auto WW(const std::uint16_t addr, const std::uint16_t word) -> void;
-    auto RB(const std::uint16_t addr) -> std::uint8_t;
-    auto RW(const std::uint16_t addr) -> std::uint16_t;
+    auto WB(const WORD addr, const BYTE byte) -> void;
+    auto WW(const WORD addr, const WORD word) -> void;
+    auto RB(const WORD addr) -> BYTE;
+    auto RW(const WORD addr) -> WORD;
  };
 }

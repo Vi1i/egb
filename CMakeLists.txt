@@ -31,11 +31,12 @@ add_executable(egb
   # I am unsure if this should stay in the z80 namespace
   # as the direct modification from the GB diffs make
   # this more of a GB perhaps?
+  src/z80/instruction.cpp
   src/z80/cpu.cpp
-  src/z80/instructions/ld_n_nn.cpp
-  src/z80/instructions/sbc_A_r.cpp
-  src/z80/instructions/cb-ops.cpp
-  src/z80/instructions/sla_n.cpp
+  #src/z80/instructions/ld_n_nn.cpp
+  #src/z80/instructions/sbc_A_r.cpp
+  #src/z80/instructions/cb-ops.cpp
+  #src/z80/instructions/sla_n.cpp
 
   # GameBoy stuffs
   src/gb/cartridge.cpp

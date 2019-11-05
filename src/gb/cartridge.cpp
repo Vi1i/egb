@@ -18,7 +18,7 @@ namespace egb::gb {
     std::ifstream file(filename, std::ios::binary);
 
 
-    _buffer = new std::uint8_t[_file_size + 1];
+    _buffer = new BYTE[_file_size + 1];
     for(auto z = 0; z <= _file_size; ++z) {
       _buffer[z] = 0;
     }
@@ -26,7 +26,7 @@ namespace egb::gb {
     char c;
     int pos = 0;
     while(file.get(c)) {
-      std::uint8_t byte = static_cast<std::uint8_t>(c);
+      BYTE byte = static_cast<BYTE>(c);
       _buffer[pos] = byte;
       pos++;
     }
@@ -66,7 +66,7 @@ namespace egb::gb {
     return _title;
   }
 
-  auto Cartridge::GetType() -> std::uint8_t {
+  auto Cartridge::GetType() -> BYTE {
     return _type;
   }
 

@@ -1,16 +1,19 @@
 #pragma once
 
-#include <cstdint>
+#include <egb/defines.hpp>
 #include <string>
 
 namespace egb::gb {
+  class System;
   class Cartridge {
+    friend class System;
+
     std::size_t _file_size;
-    std::uint8_t _type;
+    BYTE _type;
     std::string _title;
     std::size_t _romSize;
     std::size_t _ramSize;
-    std::uint8_t * _buffer;
+    BYTE * _buffer;
 
     auto _Initialize() -> void;
 
@@ -19,7 +22,7 @@ namespace egb::gb {
     ~Cartridge();
 
     auto GetTitle() -> std::string;
-    auto GetType() -> std::uint8_t;
+    auto GetType() -> BYTE;
     auto GetROMSize() -> std::size_t;
     auto GetRAMSize() -> std::size_t;
   };

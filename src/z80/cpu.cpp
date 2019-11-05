@@ -8,80 +8,81 @@
 
 namespace egb::z80 {
   CPU::CPU(MMU * mmu) {
-    _cycles = 0;
-    _steps = 0;
-    _mmu = mmu;
+    cycles = 0;
+    steps = 0;
+    this->mmu = mmu;
 
-    for(auto &reg : regs) {
-      reg = {0x0000};
-    }
+    RegAF = {0x01B0};
+    RegBC = {0x0013};
+    RegDE = {0x00D8};
+    RegHL = {0x014D};
+    RegSP = {0xFFFE};
+    RegPC = {0x0000};
 
-    regs[RegPC].w = egb::defines::BIOS_START;
-    _instructions[0x01] = &CPU::LD_n_nn;
-    _instructions[0x11] = &CPU::LD_n_nn;
-    _instructions[0x21] = &CPU::LD_n_nn;
-    _instructions[0x31] = &CPU::LD_n_nn;
-
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-    _instructions[0xCB] = &CPU::CBSwitcher;
-
-    _instructions[0x98] = &CPU::SBC_A_s;
-    _instructions[0x99] = &CPU::SBC_A_s;
-    _instructions[0x9A] = &CPU::SBC_A_s;
-    _instructions[0x9B] = &CPU::SBC_A_s;
-    _instructions[0x9C] = &CPU::SBC_A_s;
-    _instructions[0x9D] = &CPU::SBC_A_s;
-    _instructions[0x9E] = &CPU::SBC_A_s;
-    _instructions[0x9F] = &CPU::SBC_A_s;
-    _instructions[0xDE] = &CPU::SBC_A_s;
-
+   mmu->WB(0xFF05, 0x00);
+   mmu->WB(0xFF06, 0x00);
+   mmu->WB(0xFF07, 0x00);
+   mmu->WB(0xFF10, 0x80);
+   mmu->WB(0xFF11, 0xBF);
+   mmu->WB(0xFF12, 0xF3);
+   mmu->WB(0xFF14, 0xBF);
+   mmu->WB(0xFF16, 0x3F);
+   mmu->WB(0xFF17, 0x00);
+   mmu->WB(0xFF19, 0xBF);
+   mmu->WB(0xFF1A, 0x7F);
+   mmu->WB(0xFF1B, 0xFF);
+   mmu->WB(0xFF1C, 0x9F);
+   mmu->WB(0xFF1E, 0xBF);
+   mmu->WB(0xFF20, 0xFF);
+   mmu->WB(0xFF21, 0x00);
+   mmu->WB(0xFF22, 0x00);
+   mmu->WB(0xFF23, 0xBF);
+   mmu->WB(0xFF24, 0x77);
+   mmu->WB(0xFF25, 0xF3);
+   mmu->WB(0xFF26, 0xF1);
+   mmu->WB(0xFF40, 0x91);
+   mmu->WB(0xFF42, 0x00);
+   mmu->WB(0xFF43, 0x00);
+   mmu->WB(0xFF45, 0x00);
+   mmu->WB(0xFF47, 0xFC);
+   mmu->WB(0xFF48, 0xFF);
+   mmu->WB(0xFF49, 0xFF);
+   mmu->WB(0xFF4A, 0x00);
+   mmu->WB(0xFF4B, 0x00);
+   mmu->WB(0xFFFF, 0x00);
   }
 
   CPU::~CPU() = default;
 
   auto CPU::ClearFlags() -> void {
-    regs[RegAF].l = 0x00;
+    RegAF.l = 0x00;
   }
 
   auto CPU::SetZFlag(bool onoff) -> void {
     auto nth(7);
-    regs[RegAF].l = (regs[RegAF].l & ~(1UL << nth)) | (onoff << nth);
+    RegAF.l = (RegAF.l & ~(1UL << nth)) | (onoff << nth);
   }
 
   auto CPU::SetNFlag(bool onoff) -> void {
     auto nth(6);
-    regs[RegAF].l = (regs[RegAF].l & ~(1UL << nth)) | (onoff << nth);
+    RegAF.l = (RegAF.l & ~(1UL << nth)) | (onoff << nth);
   }
 
   auto CPU::SetHFlag(bool onoff) -> void {
     auto nth(5);
-    regs[RegAF].l = (regs[RegAF].l & ~(1UL << nth)) | (onoff << nth);
+    RegAF.l = (RegAF.l & ~(1UL << nth)) | (onoff << nth);
   }
 
   auto CPU::SetCFlag(bool onoff) -> void {
     auto nth(4);
-    regs[RegAF].l = (regs[RegAF].l & ~(1UL << nth)) | (onoff << nth);
+    RegAF.l = (RegAF.l & ~(1UL << nth)) | (onoff << nth);
   }
 
-  auto CPU::GetSteps() -> std::uint64_t {
-    return _steps;
+  auto CPU::Read() -> void {
+    instructions.push_back(Instruction(this));
   }
 
-  auto CPU::Step() -> void {
-    std::copy(std::begin(regs), std::end(regs), std::begin(prev_regs));
-    std::uint8_t byte = _mmu->RB(regs[RegPC].w);
-    //regs[RegPC].w += 2;
-    _steps++;
-    if(_instructions.count(byte)) {
-      (this->*(_instructions[byte]))();
-    } else {
-      throw std::runtime_error("Instruction(" + utils::pByte(byte) + ") unimplemented!");
-    }
+  auto CPU::Execute() -> void {
+    instructions.back().Execute();
   }
 }
